@@ -1,3 +1,5 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -6,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class task2 {
+public class Task2 {
 
     public static void main(String[] args) {
         String inputFilePath = "D:\\ГОУАЙТИ\\дз10\\file2.txt";
@@ -49,19 +51,9 @@ public class task2 {
 
     public static void writeUsersToJsonFile(List<User> userList, String filePath) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            writer.write("[\n");
-            for (int i = 0; i < userList.size(); i++) {
-                User user = userList.get(i);
-                writer.write("    {\n");
-                writer.write("        \"name\": \"" + user.getName() + "\",\n");
-                writer.write("        \"age\": " + user.getAge() + "\n");
-                writer.write("    }");
-                if (i < userList.size() - 1) {
-                    writer.write(",");
-                }
-                writer.write("\n");
-            }
-            writer.write("]");
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(userList);
+            writer.write(json);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -90,3 +82,5 @@ public class task2 {
         }
     }
 }
+
+      
